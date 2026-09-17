@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alerta de Ofertas — imóveis abaixo do preço no litoral</title>
+<meta name="description" content="Configure alertas de oportunidades imobiliárias abaixo do R$/m² de mercado no litoral. Satélite da rede praia.digital">
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#18181b;color:#fafafa;min-height:100vh}
+header{padding:24px;text-align:center;background:linear-gradient(120deg,#dc2626,#f97316)}
+nav a{color:#fef08a;margin:0 8px;text-decoration:none;font-size:14px}
+.wrap{max-width:720px;margin:auto;padding:24px}
+.panel{background:#27272a;border-radius:16px;padding:22px;margin-bottom:18px}
+label{display:block;margin:10px 0 4px;font-weight:600}
+input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #3f3f46;background:#18181b;color:#fff;font-size:16px}
+.deal{background:#27272a;border-left:6px solid #22c55e;border-radius:12px;padding:16px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.deal b{color:#4ade80;font-size:20px}
+.badge{background:#14532d;color:#86efac;border-radius:99px;padding:3px 12px;font-size:12px;font-weight:700}
+button.go{width:100%;background:#f97316;border:none;color:#fff;padding:14px;border-radius:12px;font-size:17px;font-weight:700;cursor:pointer}
+#msg{margin-top:12px;text-align:center;color:#4ade80;font-weight:600}
+footer{padding:20px;text-align:center;font-size:13px;color:#a1a1aa}
+footer a{color:#fbbf24}
+</style></head>
+<body>
+<header><h1>🚨 Alerta de Ofertas</h1><p>Oportunidades abaixo do preço de mercado, direto no seu radar</p>
+<nav><a href="https://praia.digital">Praia Digital</a><a href="https://praia.digital/radar-precos">Radar de Preços</a><a href="https://praia.digital/investidores">Investidores</a><a href="https://praia.digital/apps">Todos os apps</a></nav></header>
+<div class="wrap">
+<div class="panel"><h2>🔥 Oportunidades detectadas hoje (demo)</h2><div id="deals"></div></div>
+<div class="panel"><h2>⚙️ Monte seu alerta</h2>
+<label>Cidade</label><select id="cid"><option>Santos</option><option>Guarujá</option><option>Praia Grande</option><option>São Sebastião</option><option>Caraguatatuba</option><option>Ubatuba</option></select>
+<label>Desconto mínimo sobre o R$/m² de mercado (%)</label><input type="number" id="desc" value="10">
+<label>Seu e-mail ou WhatsApp</label><input id="contato" placeholder="voce@email.com">
+<button class="go" onclick="salvar()">Criar meu alerta 🚨</button><p id="msg"></p></div>
+</div>
+<footer>Rede <a href="https://praia.digital">praia.digital</a> · <a href="https://praia.digital/match-praia">Match Praia</a> · <a href="https://praia.digital/open-house">Open House</a> · <a href="https://praia.digital/avaliador-imoveis">Avaliador</a></footer>
+<script>
+const ofertas=[
+['Apê 2 dorm. Boqueirão, Santos','R$ 10.650/m²','R$ 11.800/m²',10],
+['Casa 3 qtos Martim de Sá, Caraguá','R$ 5.900/m²','R$ 6.800/m²',13],
+['Studio Enseada, Guarujá','R$ 7.900/m²','R$ 8.900/m²',11],
+['Kitnet Canto do Forte, PG','R$ 6.100/m²','R$ 6.800/m²',10],
+['Cobertura Maresias, São Sebastião','R$ 11.900/m²','R$ 13.500/m²',12]];
+deals.innerHTML=ofertas.map(o=>`<div class="deal"><div><strong>${o[0]}</strong><br><small style="color:#a1a1aa">${o[1]} vs mercado ${o[2]}</small></div><span class="badge">-${o[3]}%</span><b>🔥</b></div>`).join('');
+function salvar(){const c=contato.value.trim();if(!c){msg.textContent='⚠️ Informe seu e-mail ou WhatsApp.';msg.style.color='#fbbf24';return;}
+localStorage.setItem('alerta',JSON.stringify({cidade:cid.value,desc:desc.value,contato:c}));
+msg.style.color='#4ade80';msg.textContent=`✅ Alerta criado! Você será avisado quando surgir imóvel em ${cid.value} com ${desc.value}%+ de desconto. (demo — integração em breve)`;}
+</script></body></html>
